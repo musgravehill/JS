@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Dependency inversion principle) - Принцип инверсии зависимостей</title>
+    </head>
+    <body> 
+        <h1>Dependency inversion principle) - Принцип инверсии зависимостей</h1>
+        <p> 
+            для уменьшения связанности
+            Модули верхних уровней не должны зависеть от модулей нижних уровней. Оба типа модулей должны зависеть от абстракций.
+            Абстракции не должны зависеть от деталей. Детали должны зависеть от абстракций. 
+        </p>
+        <script>
+            /*
+             class Fetch{
+             constructor(){}
+             makeRequest(){
+             return Promise.resolve('Data from some DB.')
+             }
+             }
+             class Localstorage{
+             constructor(){}
+             getData(){
+             return localStorage.getItem('key');
+             }
+             }
+             class Database{
+             constructor(){
+             this.fetch = new Fetch;  //нарушаеть принцип! Эта абстракция высокого уровня зависит от абстракций младшего уровня
+             this.localstorage = new Localstorage; //нарушаеть принцип!Эта абстракция высокого уровня зависит от абстракций младшего уровня
+             }
+             getData(){
+             return this.fetch.makeRequest(); //?? или же из  localstorage дергать?
+             }
+             }
+             
+             const db= new Database();
+             console.log(db.getData()); */
+
+            class FetchClient {
+                constructor() {
+                    this.fetch = new Fetch;
+                }
+                getData() {
+                    return  Promise.resolve('Data from some DB.')
+                }
+            }
+            class LocalstorageClient {
+                constructor() {
+                    this.localstorage = localStorage;
+                }
+                getData() {
+                    return localStorage.getItem('key');
+                }
+            }
+
+            class Database {
+                constructor(client) {
+                    this.client = client
+                }
+                getData() {
+                    return this.client.getData();
+                }
+            }
+
+            const localstorageClient = new LocalstorageClient();
+            const db = new Database(localstorageClient);
+            console.log(db.getData());
+
+
+
+
+
+        </script>
+    </body>
+</html>

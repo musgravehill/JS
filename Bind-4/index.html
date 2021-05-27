@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>JS</title>
+    </head>
+    <body> 
+        <script>
+            const person = {
+                username: 'Ivan'
+            };
+
+            function getInfo(phone, email) {
+                const data = this.username;
+                console.log(`Data is: ${data}. Phone: ${phone}. Email: ${email}`);
+            }
+
+            //getInfo();
+
+            // const getInfo2 = getInfo.bind(person);               
+            //getInfo2();
+
+            //getInfo.bind(person)('891599999', 'iva@ff.ru');  //ok
+            //getInfo.bind(person, '891599999')('iva@ff.ru'); //ok
+            //getInfo.bind(person, '891599999', 'iva@ff.ru')(); //ok
+
+
+            ///// #1
+            function bind1(fn, context) {
+                return fn.bind(context);
+            }
+            //const f = bind1(getInfo,person); is equal to 
+            //bind1(getInfo,person)('891599999', 'iva@ff.ru'); //ok
+            // bind1(getInfo,person,'891599999', 'iva@ff.ru')();   //Data is: Ivan. Phone: undefined. Email: undefined
+
+            ///// #2
+            /*
+             function bind2(fn, context, ...rest) {  //...rest
+             return fn.bind(context, ...rest); //...spread
+             }
+             bind2(getInfo, person)('891599999', 'iva@ff.ru');//ok
+             bind2(getInfo, person, '891599999')('iva@ff.ru');//ok
+             bind2(getInfo, person, '891599999', 'iva@ff.ru')();//ok 
+             */
+
+            ///#3  ES6    
+            /*
+             let id1 = Symbol("id");//uniq
+             let id2 = Symbol("id");  //uniq
+             console.log(id1 === id2); // false
+             
+             //преобразование объекта и потом удалении свойств. А можно реализовать через создание копии объекта? Типа чтобы не мутировать обьект
+             //можно с помощью spread^^^    const updatedContext = { ...context } 
+             function bind3(fn, context, ...rest1) {
+             return function (...rest2) {
+             //const uniqId = Date.now().toString(); //uniq string
+             const uniqId = Symbol('myFnId').toString(); //uniq string
+             context[uniqId] = fn;   //add new param 'uniqId' to object 'context'
+             const args = rest1.concat(rest2);
+             const result = context[uniqId](...args); //get result with (spread params by ...)
+             delete  context[uniqId];  //remove. Модифицировать объект - это плохо. Поэтому удалим привязку функции.
+             return result;
+             }
+             }
+             bind3(getInfo, person)('891599999', 'iva@ff.ru');//ok
+             bind3(getInfo, person, '891599999')('iva@ff.ru');//ok
+             bind3(getInfo, person, '891599999', 'iva@ff.ru')();//ok
+             console.log(person);
+             */
+
+            ///#4  ES5
+            /*function bind4(fn, context) {
+             const argsArray1 = Array.prototype.slice.call(arguments, 2); //call function array.slice(). arguments - magic word. 2-remove first 'fn', 'context', leave next args
+             return function () {
+             const argsArray2 = Array.prototype.slice.call(arguments);
+             //if use .call, то аругменты не в массиве, а перечисление, что трудно и неясно заранее
+             const res = fn.apply(context, argsArray1.concat(argsArray2)); //run fn
+             return res;
+             }
+             }
+             
+             bind4(getInfo, person)('891599999', 'iva@ff.ru');//ok
+             bind4(getInfo, person, '891599999')('iva@ff.ru');//ok
+             bind4(getInfo, person, '891599999', 'iva@ff.ru')();//ok
+             console.log(person);*/
+
+            ///#5  ES6
+            function bind5(fn, context, ...rest1) {
+                return function (...rest2) {
+                    return fn.apply(context, rest1.concat(rest2)); //array of arguments 
+                    return fn.call(context, ...rest1.concat(rest2)); //spread array to перечисление аргументов
+                }
+            }
+
+            bind5(getInfo, person)('891599999', 'iva@ff.ru');//ok
+            bind5(getInfo, person, '891599999')('iva@ff.ru');//ok
+            bind5(getInfo, person, '891599999', 'iva@ff.ru')();//ok
+            console.log(person);
+
+
+
+        </script>
+    </body>
+</html>

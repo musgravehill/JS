@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>JS</title>
+    </head>
+    <body> 
+        <p> 
+            Замыкание работает для функций.
+            Замыкание - функция внутри функции)))).
+            Замыкание - замыкание области видимости внутри некого объема scope.
+            Ззамыкается область видимости родительской ф-ции, в этом и весь смысл, а не просто "функция в функции" 
+            и дочерняя ф-ция сохраняет доступ к этой видимости (переменным родительской ф-ции).
+        </p>
+        <script>
+
+            /*const bind2??? = function (obj, cb) {
+             let o = Object.create(obj);
+             o.someMethod = cb;
+             return o.someMethod;
+             };*/
+
+            function fn() {
+                let a = 0; // 1.объявили перменную, которую хотим замкнуть внутри. Эта переменная доступна исключительно внутри fn(), в т.ч. и для анонимной функции внутри. Выглядит как private 
+                return  function () { // 2.создали функцию, которая имеет доступ к переменной внутри замкнутой области видимости
+                    a++;
+                    return a;
+                };
+            }
+            function logger(honorific, mess) {
+                console.log(` ${honorific} ${this.username} ${mess} `);
+            }
+            let user = {
+                username: 'Ivan',
+                about() {
+                    console.log(`About: ${this.username}.`);
+                }
+            };
+            function bind1(obj, fn) {
+                return function (...args) {
+                    //1. fn.apply(obj, args);
+                    //2. 
+                    const fnName = fn.name;
+                    const sym = Symbol(fnName).toString();
+                    let objExt = {...obj, [sym]: fn};  //объекту добавили нужный метод
+                    return objExt[sym](...args); //вызываем добавленный метод у объекта
+                }
+            }
+            const b1 = bind1(user, logger);
+            // b1('Mr. ', ' how dare you?');
+
+            function bind2(obj, fn, ...argsOuter) {
+                return function (...argsInner) {
+                    return fn.apply(obj, argsOuter.concat(argsInner));
+                }
+            }
+            const b2 = bind2(user, logger, 'Sir ');
+            // b2('How dare you!');
+
+            /*const b2_2 = bind2(user, logger, 'Sir ', 'How dare you!');
+             setTimeout(b2_2, 1000);
+             setTimeout(function () {
+             b2_2();
+             }, 1000);
+             setTimeout(() => b2_2(), 1000);*/
+
+            ///////////
+            setTimeout(user.about, 2000); //error
+            setTimeout(function () {
+                return user.about();
+            }, 2000); //ok. Closure!
+            setTimeout(() => user.about(), 2000); //ok. Closure!
+
+            const fnST = user.about.bind(user); //not closure, simple bind
+            setTimeout(fnST, 2000);
+
+
+
+
+
+        </script>
+    </body>
+</html>

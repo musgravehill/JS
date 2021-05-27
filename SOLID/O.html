@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Open Close principle Принцип открытости/закрытости</title>
+    </head>
+    <body> 
+        <h1>Open Close principle Принцип открытости/закрытости</h1>
+        <p>Писать код так, что его можно потом не переписывать, а дополнять. Класс открыт для дополнений, но закрыт для изменений внутри него.
+            Software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification
+        </p>
+        <script>
+            class Shape {
+                getArea() {
+                    throw new Error('Shape.getArea should be implemented');
+                }
+            }
+
+            class Square extends Shape {
+                constructor(size) {
+                    super();
+                    this.size = size;
+                }
+                getArea() {
+                    return (this.size) ** 2;
+                }
+            }
+            class Circle extends Shape {
+                constructor(radius) {
+                    super();
+                    this.radius = radius;
+                }
+                getArea() {
+                    return (this.radius) ** 2 * Math.PI;
+                }
+            }
+            class Rect extends Shape {
+                constructor(w, h) {
+                    super();
+                    this.w = w;
+                    this.h = h;
+                }
+                getArea() {
+                    return this.w * this.h;
+                }
+            }
+
+            class CalcArea {
+                constructor(shapes = []) {
+                    this.shapes = shapes;
+                }
+
+                sum() {
+                    return this.shapes.reduce((acc, shape) => {
+                        acc += shape.getArea();
+                        return acc;
+                    }, 0);
+                }
+            }
+
+            /* class Square {
+             constructor(size) {
+             this.type = 'square'
+             this.size = size;
+             }
+             }
+             class Circle {
+             constructor(radius) {
+             this.type = 'circle'
+             this.radius = radius;
+             }
+             }
+             class Rect {
+             constructor(w, h) {
+             this.type = 'rect'
+             this.w = w;
+             this.h = h;
+             }
+             }
+             
+             class CalcArea {
+             constructor(shapes = []) {
+             this.shapes = shapes;
+             }
+             
+             sum() {
+             return this.shapes.reduce((acc, shape) => {
+             if (shape.type === 'square') {
+             acc += (shape.size) ** 2;
+             } else if (shape.type === 'circle') {
+             acc += (shape.radius ** 2) * Math.PI;
+             }
+             
+             //ДОПИЛИЛ класс, добавил else if (shape.type === 'rect') { ====> нарушил принцип
+             
+             return acc;
+             }, 0);
+             }
+             }*/
+
+
+            const square = new Square(2);
+            const circle = new Circle(3);
+            const rect = new Rect(4, 5);
+            const calcArea = new CalcArea([square, circle, rect]);
+            console.log(calcArea.sum());
+        </script>
+    </body>
+</html>

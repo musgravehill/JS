@@ -1,0 +1,56 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script>
+            const args = {
+                name: 'Ivan',
+                age: 23,
+                data: ['abb', 'ccc', 'dvv']
+            };
+
+            console.log(JSON.stringify(args, null, 4));
+
+            const issetData = args.data?.join('_');
+            console.log(issetData);
+                    const issetInfo = args.info?.join('_');
+            console.log(issetInfo);
+
+            const {name, age} = args;
+            console.log(name, age);
+
+            const {0: abbeshka} = args.data;
+            console.log(abbeshka);
+
+            const arr = [1, 2, 3];
+            const arr2 = [...arr, 4, 5];
+            console.log(arr2);
+
+            const arr3 = [1, 1, 1, 2, 3, 4, 5, 6, 6, 6, 6, 7, 7, 7, 7, 7, 8];
+            const set3Uiniq = new Set(arr3);
+            console.log(set3Uiniq); //set
+            const arr3UiniqArr = [...set3Uiniq];
+            console.log(arr3UiniqArr); //arr
+
+            const arr8 = [['8'], 8, "8", '8'];
+            const arr8Num = arr8.map(Number);
+            console.log(arr8Num);
+
+            //Array.prototype.flat()  Array.prototype.flatMap() 
+
+            console.time('t0');
+            let a = 1;
+            let b = 2;
+            [a, b] = [b, a];
+            console.log(a, b);
+            console.timeEnd('t0');
+
+             
+
+        </script>
+    </body>
+</html>

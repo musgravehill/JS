@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>Single responsibility principle Принцип единственной ответственности</title>
+    </head>
+    <body> 
+        <h1>Single responsibility principle Принцип единственной ответственности</h1>
+        <p>Нельзя смешивать функционал в одном месте. Нельзя смешивать поведения в одном месте.</p>
+        <script>
+            class News {
+                constructor(title, body) {
+                    this.title = title;
+                    this.body = body;
+                    this.isModified = false;
+                }
+                update(title) {
+                    this.title = title;
+                    this.isModified = true;
+                }
+                toHTML() {
+                    return ` НАРУШЕН ПРИНЦИП "S" - этот класс отвечает за работу с новостью, а не обертку и отображение <h1>${this.title}</h1> <p>${this.body}</p> `;
+                }
+                toJSON() {
+                    //НАРУШЕН ПРИНЦИП "S" - этот класс отвечает за работу с новостью, а не обертку и отображение
+                }
+            }
+            class NewsFormatter {
+                constructor(news) {
+                    this.news = news;
+                }
+                toHTML() {
+                    return ` <h1>${this.news.title}</h1> <p>${this.news.body}</p> `;
+                }
+            }
+            const news = new News('T', 'Body');
+            const newsFormatter = new NewsFormatter(news);
+            console.log(newsFormatter.toHTML());
+        </script>
+    </body>
+</html>

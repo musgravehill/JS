@@ -1,0 +1,41 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script>
+            class Abstract {
+                constructor() {
+                    if (new .target === Abstract) {
+                        throw new TypeError("Cannot construct " + new .target.name + " instances directly");
+                    }
+                    if (this.method === undefined) {
+                        // or maybe test typeof this.method === "function"
+                        throw new TypeError("Must override method");
+                    }
+                }
+            }
+
+            class Derived extends Abstract {
+                constructor() {
+                    super();
+                    // more Derived-specific stuff here, maybe
+                }
+                method() {}
+            }
+
+            class Derived2 extends Abstract {
+
+            }
+
+            const a = new Abstract(); // new.target is Abstract, so it throws
+            const b = new Abstract(); // this.method is undefined; error
+            const c = new Derived(); // OK
+            const d = new Derived2(); // this.method is undefined; error  
+            
+        </script>
+    </body>
+</html>

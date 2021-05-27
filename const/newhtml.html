@@ -1,0 +1,38 @@
+ 
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+
+    </body>
+    <script>
+        const c0 = 4;
+        // c0=5; //Uncaught TypeError: Assignment to constant variable. 
+        // c0<<=2; // c0 = c0<<2; bitShift  //Uncaught TypeError: Assignment to constant variable. 
+        // console.log(c0);   
+
+        // const c1 = {}; //в константе указатель на объект?
+        // c1.someParam = 'someParam'; //OK
+        // console.log(c1);
+
+//const realConstant = {realConstantParam: 33};
+        const realConstant = Object.freeze({realConstantParam: 33}); //в константе указатель на объект?    
+        realConstant.someParam = 'someParam'; //OK
+        realConstant.newMethod = function () {
+            return 99;
+        };
+        Object.defineProperty(realConstant, 'newParam',
+                {
+                    value: 37,
+                    writable: true,
+                    enumerable: true,
+                    configurable: true
+                }
+        );
+        console.log(realConstant); //{realConstantParam: 33}
+
+    </script>
+</html>

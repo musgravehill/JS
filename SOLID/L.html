@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title> Liskov substitution principle Принцип подстановки Барбары Лисков</title>
+    </head>
+    <body> 
+        <h1> Liskov substitution principle Принцип подстановки Барбары Лисков</h1>
+        <p>Функции, которые используют базовый тип, должны иметь возможность использовать подтипы базового типа, не зная об этом.                    
+
+            Более простыми словами можно сказать, что поведение наследующих классов не должно противоречить поведению, заданному базовым классом, 
+            то есть поведение наследующих классов должно быть ожидаемым для кода, использующего переменную базового типа.
+            «подкласс не должен требовать от вызывающего кода больше, чем базовый класс, и не должен предоставлять вызывающему коду меньше, чем базовый класс». 
+
+        </p>
+        <script>
+            /*
+             class Component{
+             render(){}
+             }
+             
+             class Footer extends Component{
+             render(){}
+             }
+             
+             class ComponentMiddlewareWrapper extends Component{
+             render(){ throw new Error('No render!') } 
+             }
+             */
+
+            class Component {
+               someCommon(){}
+            }
+
+            class ComponentWithTemplate extends Component{
+                someCommon(){}
+                render() {}
+            }
+
+            class ComponentService extends Component{
+                someCommon(){}
+                wrap() {}
+            }
+            
+            class Footer extends ComponentWithTemplate{
+                someCommon(){}
+                render() {}
+            }
+            
+            const footer = new Footer();
+            footer.render();
+            
+            
+
+
+        </script>
+    </body>
+</html>

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>JS</title>
+    </head>
+    <body> 
+        <script>
+            //Наследование inheritance
+
+            class Softmaker {
+                constructor(username) {
+                    this.username = username;
+                }
+                makeCode() {
+                    let username = this.username;
+                    console.log(username + ' makes code.');
+                }
+            }
+            class SoftmakerFrontend extends Softmaker {
+                playVue() {
+                    let username = this.username;
+                    console.log(username + ' play at Vue.');
+                }
+            }
+            class SoftmakerBackend extends Softmaker {
+                playPhp() {
+                    let username = this.username;
+                    console.log(username + ' play at PHP.');
+                }
+            }
+            //!!!!!!  class Fullstack extends SoftmakerFrontend  AND SoftmakerBackend.... HOW????
+            const softmaker0 = new Softmaker('IvanSM');
+            softmaker0.makeCode();
+
+            const vueMaker = new SoftmakerFrontend('PetrFront');
+            vueMaker.makeCode();
+            vueMaker.playVue();
+
+            //COMPOSITION
+
+            function createProgrammer(username) {
+                const programmer = {
+                    username: username
+                }
+                return {
+                    ...programmer, // ...SPREAD  to username:username,  
+                    ...canDoCode(programmer)
+                };
+            }
+
+            function canDoCode( {username}){
+                return {
+                    canDoCode: () => console.log(username + ' makes code.')
+                };
+            }
+
+            function canDoVue( {username}){
+                return {
+                    canDoVue: () => console.log(username + ' makes code at Vue.')
+                };
+            }
+            function canDoPhp( {username}){
+                return {
+                    canDoPhp: () => console.log(username + ' makes code at Php.')
+                };
+            }
+
+            function createProgrammerFront(username) {
+                const programmer = createProgrammer(username);
+
+                return {
+                    ...programmer,
+                    ...canDoVue(programmer)
+                }
+            }
+
+            function createProgrammerFullstack(username) {
+                const programmer = createProgrammer(username);
+
+                return {
+                    ...programmer,
+                    ...canDoVue(programmer),
+                    ...canDoPhp(programmer)
+                }
+            }
+
+
+            const proger0 = createProgrammerFullstack('Ivan');
+            proger0.canDoCode();
+            proger0.canDoVue();
+            proger0.canDoPhp();
+
+
+
+        </script>
+    </body>
+</html>
+

@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>JS</title>
+    </head>
+    <body> 
+        <script>
+           /* const Shape = {
+                x: 0,
+                y: 0,
+                area: function(){
+                    console.log(this.x * this.y);
+                }
+            };
+            
+            Object.prototype.getInfo = function(){
+                 console.log('Im some shape.');
+            };
+            
+            const Rect = Object.create(Shape);
+            Rect.getInfo = function(){
+                 console.log('Im some rect.');
+            };*/
+            
+            
+            
+            
+            
+            function Shape() {
+                this.x = 0;
+                this.y = 0;
+            }
+            
+            // метод суперкласса
+            Shape.prototype.move = function (x, y) {
+                this.x += x;
+                this.y += y;
+                console.info('Фигура переместилась.');
+            };
+
+            // Rectangle — подкласс
+            function Rectangle() {
+               Shape.call(this); // вызываем конструктор суперкласса
+               console.log(this);
+            }
+
+            // подкласс расширяет суперкласс
+            Rectangle.prototype = Object.create(Shape.prototype);
+            //Rectangle.prototype.constructor = Rectangle;
+
+            var rect = new Rectangle();
+
+            console.log('Является ли rect экземпляром Rectangle? ' + (rect instanceof Rectangle)); // true
+            console.log('Является ли rect экземпляром Shape? ' + (rect instanceof Shape)); // true
+            rect.move(1, 1); // выведет 'Фигура переместилась.'
+     
+        </script>
+    </body>
+</html>

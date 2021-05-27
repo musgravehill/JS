@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>JS</title>
+    </head>
+    <body> 
+        <h1>Prototype, This, Классы, Контекст, Наследование</h1>   
+
+        <script>
+            //old ES5, but ...rest 
+            /*
+             const Animal = function (options) {
+             this.name = options.name;
+             this.color = options.color;
+             this.getVoice = function(){       // этот метод трудно переопределить
+             console.log(`Animal voice from ${this.name}`);
+             };
+             };
+             Animal.prototype.getCountLegs = function(){ // этот метод легко переопределить
+             console.log(`Count legs at ${this.name}`);
+             };
+             
+             //const dog = new Animal({name: 'Rex', color: '#ffffff'});
+             //dog.getCountLegs();
+             
+             const Cat = function(options){
+             Animal.apply(this, arguments);
+             this.hasTail = options.hasTail;
+             };
+             
+             Cat.prototype = Object.create(Animal.prototype); //Решает проблему:  cat.getCountLegs is not a function
+             Cat.prototype.constructor = Cat; //конструктор должен указывать на Cat, а не на Animal            
+             
+             Animal.prototype.getCountLegs = function(){ // этот метод легко переопределить
+             console.log(`This animal has some legs. ${this.name}`);
+             };
+             
+             Cat.prototype.getCountLegs = function(){ // этот метод легко переопределить
+             Animal.prototype.getCountLegs.apply(this, arguments);
+             console.log(`The cat has 4 legs. ${this.name}`);
+             };
+             
+             const cat = new Cat({name: 'Murka', color: '#000', hasTail: true});
+             
+             cat.getVoice();
+             cat.getCountLegs();  //Решает проблему: cat.getCountLegs is not a function
+             console.log(cat);
+             */
+
+            //======================ES6=========================================
+            class Animal {
+                constructor(options) {
+                    this.name = options.name;
+                    this.color = options.color;
+                }
+
+                getCountLegs() {    //this method in Animal.prototype. Это удобно и правильно.
+                    console.log('This animal "' + this.name + '" has some legs.');
+                }
+            }
+
+            const someAnimal = new Animal({name: 'Rex', color: '#ffffff'});
+            //console.log(someAnimal);          
+            //  // someAnimal.getCountLegs();
+
+            class Cat extends Animal {
+                constructor(options) {
+                    super(options); //call parent 
+                    this.countLegs = 4;
+                    this.hasTail = options.hasTail;
+                }
+
+                getCountLegs() {    //this method in Animal.prototype. Это удобно и правильно.
+                    super.getCountLegs();
+                    console.log('This animal "' + this.name + '" has ' + this.countLegs + ' legs.');
+                }
+            }
+
+            const cat = new Cat({name: 'Murka', color: '#000', hasTail: true});
+            console.log(cat);
+            cat.getCountLegs();
+
+
+        </script>
+    </body>
+</html>

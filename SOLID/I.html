@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>interface segregation principle Принцип разделения интерфейса</title>
+    </head>
+    <body> 
+        <h1>interface segregation principle Принцип разделения интерфейса</h1>
+        <p> 
+            Программные сущности не должны зависеть от методов, которые они не используют.
+            Принцип разделения интерфейсов говорит о том, что слишком «толстые» интерфейсы необходимо разделять на более маленькие и специфические, 
+            чтобы программные сущности маленьких интерфейсов знали только о методах, которые необходимы им в работе. 
+            В итоге, при изменении метода интерфейса не должны меняться программные сущности, которые этот метод не используют.
+        </p>
+        <script>
+
+            /*
+             class Animal {
+             fly() {}
+             swim() {}
+             walk() {}
+             }
+             
+             class Fish extends Animal {
+             fly() {
+             return null;   //нарушает принцип
+             }
+             swim() {
+             return 'can do';
+             }
+             walk() {
+             return null; //нарушает принцип
+             }
+             }
+             
+             class Bird extends Animal {
+             fly() {
+             return 'can do';
+             }
+             swim() {
+             return null; //нарушает принцип
+             }
+             walk() {
+             return null; //нарушает принцип
+             }
+             }  */
+    
+    
+
+            //COMPOSITION API следует принципу
+
+            class Animal {
+                //fly() {}
+                //swim() {}
+                //walk() {}
+            }
+
+            const swimAction = {
+                swim() {
+                    return 'can do';
+                }
+            }
+
+            const flyAction = {
+                fly() {
+                    return 'can do';
+                }
+            }
+
+            class Fish extends Animal {
+                eatWorms() {}
+            }
+
+            class Bird extends Animal {
+                peckGrain() {}
+            }
+
+            Object.assign(Fish.prototype, swimAction);
+            Object.assign(Bird.prototype, flyAction);
+            
+            Bird.fly();
+            
+
+
+        </script>
+    </body>
+</html>

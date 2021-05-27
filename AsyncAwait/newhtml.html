@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <script>
+            function makeReq(url) {
+                return new Promise((resolve, reject) => {
+                    console.log(`MakeReq to ${url}`);
+                    if ('google' === url) {
+                        resolve('MakeReq OK');
+                    } else {
+                        reject('MakeReq ERR');
+                    }
+                });
+            }
+            function processReq(data) {
+                return new Promise((resolve, reject) => {
+                    console.log(`processReq ${data}`);
+                    resolve(`processReq OK ${data}`);
+                });
+            }
+            /* makeReq('notgoogle').then((responce) => {
+             console.log('then1 ok');
+             return processReq(responce);
+             }).then((res) => {
+             console.log('then2 ok');
+             console.log(res);
+             }).catch((err) => {
+             console.log(err);
+             });
+             
+             makeReq('google').then((responce) => {
+             console.log('then1 ok');
+             return processReq(responce);
+             }).then((res) => {
+             console.log('then2 ok');
+             console.log(res);
+             }).catch((err) => {
+             console.log(err);
+             });*/
+
+            async function makeR(url) {
+                try {
+                    const resp = await makeReq(url);
+                    console.log('resp received!');
+                    const res = await processReq(resp);
+                    console.log('res ready: ' + res);
+                } catch (err) {
+                    console.log(err);
+                }
+            }
+            makeR('notgoogle');
+
+        </script>
+    </body>
+</html>
