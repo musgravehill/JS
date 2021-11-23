@@ -97,6 +97,57 @@
             bind5(getInfo, person, '891599999')('iva@ff.ru');//ok
             bind5(getInfo, person, '891599999', 'iva@ff.ru')();//ok
             console.log(person);
+            
+            
+            
+            
+            
+             function logger(honorific, mess) {
+                console.log(` ${honorific} ${this.username} ${mess} `);
+            }
+            let user = {
+                username: 'Ivan',
+                about() {
+                    console.log(`About: ${this.username}.`);
+                }
+            };
+            function bind1(obj, fn) {
+                return function (...args) {
+                    //1. fn.apply(obj, args);
+                    //2. 
+                    const fnName = fn.name;
+                    const sym = Symbol(fnName).toString();
+                    let objExt = {...obj, [sym]: fn};  //объекту добавили нужный метод
+                    return objExt[sym](...args); //вызываем добавленный метод у объекта
+                }
+            }
+            const b1 = bind1(user, logger);
+            // b1('Mr. ', ' how dare you?');
+
+            function bind2(obj, fn, ...argsOuter) {
+                return function (...argsInner) {
+                    return fn.apply(obj, argsOuter.concat(argsInner));
+                }
+            }
+            const b2 = bind2(user, logger, 'Sir ');
+            // b2('How dare you!');
+
+            /*const b2_2 = bind2(user, logger, 'Sir ', 'How dare you!');
+             setTimeout(b2_2, 1000);
+             setTimeout(function () {
+             b2_2();
+             }, 1000);
+             setTimeout(() => b2_2(), 1000);*/
+
+            ///////////
+            setTimeout(user.about, 2000); //error
+            setTimeout(function () {
+                return user.about();
+            }, 2000); //ok. Closure!
+            setTimeout(() => user.about(), 2000); //ok. Closure!
+
+            const fnST = user.about.bind(user); //not closure, simple bind
+            setTimeout(fnST, 2000);
 
 
 

@@ -25,55 +25,62 @@
                 let a = 0; // 1.объявили перменную, которую хотим замкнуть внутри. Эта переменная доступна исключительно внутри fn(), в т.ч. и для анонимной функции внутри. Выглядит как private 
                 return  function () { // 2.создали функцию, которая имеет доступ к переменной внутри замкнутой области видимости
                     a++;
+                    console.log(a);
                     return a;
                 };
             }
-            function logger(honorific, mess) {
-                console.log(` ${honorific} ${this.username} ${mess} `);
+            fn()();
+            fn()();
+
+
+            function f0() {
+                let a = 55;
+                return () => {
+                    a++;
+                    console.log(a);
+                };
             }
-            let user = {
-                username: 'Ivan',
-                about() {
-                    console.log(`About: ${this.username}.`);
+
+            f0()();
+            f0()();
+
+
+            function makeAdder(addon) {
+                return (x) => x + addon;
+            }
+            let adder5 = makeAdder(5);
+            console.log(adder5(10))
+
+            let adder77 = makeAdder(77);
+            console.log(adder77(10));
+
+            //Эмуляция частных (private) методов с помощью замыканий
+            let counter = () => {
+                let countCurr = 0;     //private
+                function adder(x) {   //private
+                    countCurr = countCurr + x;
                 }
+                let res = {
+                    getCount: () => countCurr,
+                    inc: () => adder(1),
+                    dec: () => adder(-1)
+                };
+                return res;
             };
-            function bind1(obj, fn) {
-                return function (...args) {
-                    //1. fn.apply(obj, args);
-                    //2. 
-                    const fnName = fn.name;
-                    const sym = Symbol(fnName).toString();
-                    let objExt = {...obj, [sym]: fn};  //объекту добавили нужный метод
-                    return objExt[sym](...args); //вызываем добавленный метод у объекта
-                }
-            }
-            const b1 = bind1(user, logger);
-            // b1('Mr. ', ' how dare you?');
 
-            function bind2(obj, fn, ...argsOuter) {
-                return function (...argsInner) {
-                    return fn.apply(obj, argsOuter.concat(argsInner));
-                }
-            }
-            const b2 = bind2(user, logger, 'Sir ');
-            // b2('How dare you!');
+            let counter0 = counter();
+            let counter1 = counter();
 
-            /*const b2_2 = bind2(user, logger, 'Sir ', 'How dare you!');
-             setTimeout(b2_2, 1000);
-             setTimeout(function () {
-             b2_2();
-             }, 1000);
-             setTimeout(() => b2_2(), 1000);*/
+            console.log('counter0 ' + counter0.getCount());
+            counter0.inc();
+            counter0.inc();
+            console.log('counter0 ' + counter0.getCount());
 
-            ///////////
-            setTimeout(user.about, 2000); //error
-            setTimeout(function () {
-                return user.about();
-            }, 2000); //ok. Closure!
-            setTimeout(() => user.about(), 2000); //ok. Closure!
-
-            const fnST = user.about.bind(user); //not closure, simple bind
-            setTimeout(fnST, 2000);
+            console.log('counter1 ' + counter1.getCount());
+            counter1.inc();
+            counter1.inc();
+            counter1.inc();
+            console.log('counter1 ' + counter1.getCount());
 
 
 
