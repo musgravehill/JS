@@ -158,6 +158,17 @@
                 return this.map((i) => i * n);
             };            
             console.log(myArr.multBy(5));
+            
+            
+            function showTitle(name, ...titles){
+                const res = name +' '+ titles.join('_');
+                console.log(res);
+            }            
+            showTitle('Ivan', 'is', 'who',['f', 'n']);
+            
+            const arr0 = [1,2,3];
+            const arr1=[4,5,6];
+            console.log( Math.max(...arr0,...arr1) );
 
 
         </script>
