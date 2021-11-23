@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>JS</title>
+    </head>
+    <body> 
+        <h1>this Bind Apply Call</h1>
+        <script>
+
+            /*
+             console.log(this); //window
+             
+             function infoThis() {
+             console.log('infoThis: ', this);
+             }
+             
+             let person = {
+             name: 'Ivan',
+             getInfoThis: infoThis,
+             getInfoThis2: () => console.log('getInfoThis2: ', this.name),
+             getInfoThis3: function () {
+             console.log('getInfoThis3: ', this.name);
+             },
+             getInfoThis4() {
+             console.log('getInfoThis4: ', this.name);
+             }
+             };
+             
+             person.getInfoThis();
+             person.getInfoThis2();
+             person.getInfoThis3();
+             person.getInfoThis4();
+             
+             setTimeout(person.getInfoThis, 1000); // this потерялся
+             setTimeout(person.getInfoThis2, 1000);
+             setTimeout(person.getInfoThis3, 1000);// this потерялся
+             setTimeout(person.getInfoThis4, 1000);// this потерялся
+             
+             setTimeout(() => person.getInfoThis(), 2000); //closures замыкание сохраняет this
+             setTimeout(() => person.getInfoThis2(), 2000);
+             setTimeout(() => person.getInfoThis3(), 2000);//closures замыкание сохраняет this
+             setTimeout(() => person.getInfoThis4(), 2000);//closures замыкание сохраняет this
+             
+             person = {
+             name: 'Petr',
+             getInfoThis: infoThis,
+             getInfoThis2: () => console.log('getInfoThis2: ', this.name),
+             getInfoThis3: function () {
+             console.log('getInfoThis3: ', this.name);
+             },
+             getInfoThis4() {
+             console.log('getInfoThis4: ', this.name);
+             }
+             };
+             
+             
+             let module = {
+             x: 81,
+             getX: function () {
+             return this.x;
+             }
+             };
+             
+             console.log(module.getX()); // 81
+             
+             let getX = module.getX;
+             console.log(getX()); //undefined
+             
+             getX = module.getX;
+             console.log(getX.bind(module)()); //81
+             
+             */
+
+            /*
+             const person = {
+             name: 'Ivan',
+             getName() {
+             console.log('getName => ', this.name);
+             }
+             };
+             
+             function timeoutFn() {
+             this.getName();
+             console.log('direct access => ', this.name);
+             }
+             
+             //Метод bind() создаёт новую функцию, которая при вызове устанавливает в качестве контекста выполнения this предоставленное значение. 
+             //В метод также передаётся набор аргументов, которые будут установлены перед переданными в привязанную функцию аргументами при её вызове.
+             
+             let tF = timeoutFn.bind(person);
+             setTimeout(tF, 1000);
+             */
+
+            // Метод call() вызывает функцию с указанным значением this и индивидуально предоставленными аргументами.
+            // call() принимает список аргументов,  apply() - одиночный массив аргументов.
+            //REST-собрать аргументы в массив. SPREAD-развернуть массив в список аргументов.
+            //Все аргументы функции находятся в псевдомассиве arguments под своими порядковыми номерами.
+
+            const user = {
+                name: 'Ivan'
+            };
+            function getData(...someData) {
+                console.log('getData=>', this.name, someData);
+            }
+            function bindCustom(fn, context, ...args) {
+                let resFn = function (...args2) {
+                    fn.apply(context, args.concat(args2));
+                };
+                return resFn;
+            }
+            const fn = bindCustom(getData, user, 'someData0', 'someData1');
+            fn();
+
+            /*
+             const user = {
+             name: 'Ivan'
+             };
+             function getData(...someData) {
+             console.log('getData:', this.name, someData);
+             }
+             function bindCustom(fn, context, ...args1) {
+             let func = function (...args2) {
+             fn.apply(context, args1.concat(args2)); //context, array of arguments
+             };
+             return func;
+             }
+             bindCustom(getData, user, 'someData0', 'someData1')();
+             bindCustom(getData, user, 'someData0')('someData1');
+             bindCustom(getData, user)('someData0', 'someData1');
+             */
+
+            /////
+            /*
+             let personInstruments = {
+             getInfo: function (...someData) {
+             console.log('getData:', this.name, someData);
+             }
+             };
+             let user0 = {
+             name: 'Ivan'
+             };
+             let fn0 = personInstruments.getInfo.bind(user0);
+             fn0('somedata0');
+             personInstruments.getInfo.call(user0, 'somedata0');
+             personInstruments.getInfo.apply(user0, ['somedata0']);
+             */
+            ///////
+            const myArr = [1, 2, 3, 4, 5];
+
+            function multBy(arr, n) {
+                return arr.map((i) => i * n)
+            }
+            console.log(multBy(myArr, 5));
+
+            Array.prototype.multBy = function (n) {
+                return this.map((i) => i * n);
+            };            
+            console.log(myArr.multBy(5));
+
+
+        </script>
+    </body>
+</html>
