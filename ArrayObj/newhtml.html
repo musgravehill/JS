@@ -32,13 +32,19 @@
             {color: 'green', id: 4},
             {color: 'green', id: 5}
         ];
-
         function ioFunc(inputArr) {
-
+            let res = {};
+            for (const el of inputArr) {
+                if (!res.hasOwnProperty(el.color)) {
+                    res[el.color] = {};
+                }
+                res[el.color][el.id] = {[el.id]: el};
+            }
+            return res;
         }
 
-        const res = ioFunc();
-
+        const res = ioFunc(inputArr);
+        console.log(res);
 
         /* const out = {
          'white': {
