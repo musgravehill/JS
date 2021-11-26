@@ -9,6 +9,32 @@
         <h1>this Bind Apply Call</h1>
         <script>
 
+            function f() {
+                console.log('this=', this);
+            }
+
+            let user = {
+                name: 'Ddd',
+                getThis: f,
+                getThis2: function () {
+                    console.log('this=', this);
+                }
+            };
+
+           /* user.getThis();
+            setTimeout(user.getThis, 2000);
+            setTimeout(user.getThis.bind(user), 2000);
+            setTimeout(() => user.getThis(), 2000);
+
+            user.getThis2();
+            setTimeout(user.getThis2, 2000);
+            setTimeout(user.getThis2.bind(user), 2000);
+            setTimeout(() => user.getThis2(), 2000); */
+
+            let ff = new f;
+            
+
+
             /*
              console.log(this); //window
              
@@ -98,20 +124,20 @@
             //REST-собрать аргументы в массив. SPREAD-развернуть массив в список аргументов.
             //Все аргументы функции находятся в псевдомассиве arguments под своими порядковыми номерами.
 
-            const user = {
-                name: 'Ivan'
-            };
-            function getData(...someData) {
-                console.log('getData=>', this.name, someData);
-            }
-            function bindCustom(fn, context, ...args) {
-                let resFn = function (...args2) {
-                    fn.apply(context, args.concat(args2));
-                };
-                return resFn;
-            }
-            const fn = bindCustom(getData, user, 'someData0', 'someData1');
-            fn();
+            /* const user = {
+             name: 'Ivan'
+             };
+             function getData(...someData) {
+             console.log('getData=>', this.name, someData);
+             }
+             function bindCustom(fn, context, ...args) {
+             let resFn = function (...args2) {
+             fn.apply(context, args.concat(args2));
+             };
+             return resFn;
+             }
+             const fn = bindCustom(getData, user, 'someData0', 'someData1');
+             fn();*/
 
             /*
              const user = {
@@ -146,29 +172,31 @@
              personInstruments.getInfo.call(user0, 'somedata0');
              personInstruments.getInfo.apply(user0, ['somedata0']);
              */
-            ///////
-            const myArr = [1, 2, 3, 4, 5];
-
-            function multBy(arr, n) {
-                return arr.map((i) => i * n)
-            }
-            console.log(multBy(myArr, 5));
-
-            Array.prototype.multBy = function (n) {
-                return this.map((i) => i * n);
-            };            
-            console.log(myArr.multBy(5));
-            
-            
-            function showTitle(name, ...titles){
-                const res = name +' '+ titles.join('_');
-                console.log(res);
-            }            
-            showTitle('Ivan', 'is', 'who',['f', 'n']);
-            
-            const arr0 = [1,2,3];
-            const arr1=[4,5,6];
-            console.log( Math.max(...arr0,...arr1) );
+            /*
+             ///////
+             const myArr = [1, 2, 3, 4, 5];
+             
+             function multBy(arr, n) {
+             return arr.map((i) => i * n)
+             }
+             console.log(multBy(myArr, 5));
+             
+             Array.prototype.multBy = function (n) {
+             return this.map((i) => i * n);
+             };            
+             console.log(myArr.multBy(5));
+             
+             
+             function showTitle(name, ...titles){
+             const res = name +' '+ titles.join('_');
+             console.log(res);
+             }            
+             showTitle('Ivan', 'is', 'who',['f', 'n']);
+             
+             const arr0 = [1,2,3];
+             const arr1=[4,5,6];
+             console.log( Math.max(...arr0,...arr1) );
+             */
 
 
         </script>

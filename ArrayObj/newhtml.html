@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        const arr = ['a', 'b', 'c', , , ];
+        arr.test = 'bad'; //нечисловые ключи или унаследованные ключи
+
+        for(let idx=0; idx< arr.length; idx++) Не пропускает пустой элемент. сохраняют значение this из внешней области
+        arr.forEach((val,idx)=>{}) Пропускает пустой элемент. сохраняют значение this из внешней области
+
+        for(let idx in arr)   //плохо: выведет не только индексы массива, но и нечисловые ключи или унаследованные ключи. Пропускает пустой элемент. Сохраняют значение this из внешней области, если стрелочная функция только!
+        не сможете использовать await внутри callback forEach
+        не сможете использовать yield
+
+
+        for(const val of arr) Не пропускает пустой элемент. сохраняют значение this из внешней области. самый надежный способ
+        for (const [i, v] of arr.entries()) {
+        console.log(i, v); // Prints "0 a", "1 b", "2 c"
+        }
+
+
+    </body>
+    <script>
+        const inputArr = [
+            {color: 'white', id: 1},
+            {color: 'red', id: 2},
+            {color: 'white', id: 3},
+            {color: 'green', id: 4},
+            {color: 'green', id: 5}
+        ];
+
+        function ioFunc(inputArr) {
+
+        }
+
+        const res = ioFunc();
+
+
+        /* const out = {
+         'white': {
+         1: {color: 'white', id: 1},
+         3: {color: 'white', id: 3}
+         },
+         'red': {
+         2: {color: 'red', id: 2}
+         },
+         'green': {
+         4: {color: 'green', id: 4},
+         5: {color: 'green', id: 5}
+         }
+         };*/
+    </script>
+</html>

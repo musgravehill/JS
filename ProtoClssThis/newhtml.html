@@ -8,13 +8,112 @@
     <body> 
         <h1>Prototype, This, Классы, Контекст, Наследование</h1>   
 
+
+        Свойство __proto__
+
+        Абсолютно любой объект в JavaScript имеет свойство __proto__. Это скрытое системное свойство, и не во всех реализациях языка оно доступно пользователю.
+        При обращении к любому свойству объекта, оно в первую очередь ищется в самом объекте:
+        var obj = {ownProperty: 1};
+        console.log(obj.ownProperty);// 1
+        Но если его там нет, поиск происходит в свойстве __proto__:
+        obj.__proto__ = {propertyOfProto: 2};
+        console.log(obj.propertyOfProto);// 2
+        Если его нет и там, оно ищется дальше по цепочке:
+        obj.__proto__.__proto__ = {propertyOfProtosProto: 3};
+        console.log(obj.propertyOfProtosProto);// 3
+        Эта цепочка называется цепочкой прототипов (prototype chain).
+
+
+
+        __proto__ любого значения (кроме null и undefined) ссылается на prototype соответствующего ему типу данных:
+        (0).__proto__ === Number.prototype &&
+        false.__proto__ === Boolean.prototype &&
+        "string".__proto__ === String.prototype &&
+        (new Date).__proto__ === Date.prototype &&
+        (function(){}/* new Function */).__proto__ === Function.prototype
+        Все типы данных наследуются от Object, это означает что к примеру:
+        Number.prototype.__proto__ === Object.prototype
+        И наконец, завершение цепочки:
+        Object.prototype.__proto__ === null
+
+        Свойство prototype
+
+        А чем же тогда является свойство prototype? Это обычное свойство, ничем не отличающиеся от любых других свойств. За исключением двух особенностей:
+
+        1) Функции в JavaScript имеют свойство prototype. Оно по умолчанию является объектом с единственным свойством constructor, которое ссылается на саму функцию.
+        2) Свойство prototype используется при создании новых объектов оператором new.
+
+        Оператор new
+
+        Этот оператор делает следущее:
+
+        1) Создает пустой объект:
+        var instance = {};
+
+        2) Устанавливает __proto__ этому объекту ссылкой на prototype функции-класса:
+        instance.__proto__ = FnClass.prototype;
+
+        3) Применяет функцию-класс к нашему новосозданному объекту:
+        constructorReturns = FnClass.apply(instance, arguments);
+        (т.е. исполняет функцию FnClass, передавая ей instance в качестве this и аргументы в виде массива arguments)
+
+        4) Возвращает экземпляр функции-класса, но если FnClass нам вернул обьект, тогда его:
+        return constructorReturns instanceof Object ? constructorReturns : instance;
+
+        Функцией-классом я называю функцию, к которой впоследствии ожидается применение оператора new. Такие функции принято именовать с заглавной буквы.
+
+
+        Свойство __proto__ также может использоваться при определении литерала объекта, устанавливая прототип [[Prototype]] объекта при его создании. 
+        Этот способ может рассматриваться как альтернатива методу Object.create(). Смотрите также литеральный синтаксис инициализации объекта.
+        ---------------------
+        
+        Классы в JavaScript были введены в ECMAScript 2015 и представляют собой синтаксический сахар над существующим в JavaScript механизмом прототипного наследования. 
+        Синтаксис классов не вводит новую объектно-ориентированную модель, а предоставляет более простой и понятный способ создания объектов и организации наследования.
+
+        
+        На самом деле классы — это "специальные функции", поэтому точно также, 
+        как вы определяете функции (function expressions и function declarations), 
+        вы можете определять и классы с помощью: class declarations и class expressions.
+        Подъём (hoisting)
+   Разница между объявлением функции (function declaration) и объявлением класса (class declaration) в том, 
+   что объявление функции совершает подъём (hoisting), в то время как объявление класса — нет. 
+   Поэтому вначале необходимо объявить ваш класс и только затем работать с ним.
+   
+        
+        class declaration     class Animal{}
+        class expression  
+            const an = class {}    // an.name = 'an'
+            const ann = class Animal{}   //ann.name = 'Animal'
+        
+        
+        В первом случае имя выражения класса находится в локальной области видимости класса и может быть получено через свойства самого класса, а не его экземпляра.
+
         <script>
             //old ES5, but ...rest 
+
+            function f(...args) {
+                console.log('f ', args.join('_'));
+                // this={}
+                // this.__proto__ = f.prototype;
+                // return this
+            }
+            const fff = new f(1,2,3);
+            //console.log(fff);
+
+            const ff = function () {
+                // this={}
+                // this.__proto__ = f.prototype;
+                // return this
+            };    
+            //console.log(ff);           
+
+
+
             /*
              const Animal = function (options) {
              this.name = options.name;
              this.color = options.color;
-             this.getVoice = function(){       // этот метод трудно переопределить
+             this.getVoice = function(){       // этот метод трудно переопределить, он 
              console.log(`Animal voice from ${this.name}`);
              };
              };
@@ -81,6 +180,12 @@
             const cat = new Cat({name: 'Murka', color: '#000', hasTail: true});
             console.log(cat);
             cat.getCountLegs();
+            
+            
+            
+            class Fishing {
+                constructor(){}
+            }
 
 
         </script>
