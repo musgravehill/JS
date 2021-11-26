@@ -22,6 +22,56 @@
         console.log(i, v); // Prints "0 a", "1 b", "2 c"
         }
 
+        ------
+        var arr = [1, -1, 2, -2, 3];
+        var positiveArr = arr.filter(function(val,idx,arr) {
+        return val > 0;
+        });
+        alert( positiveArr ); // 1,2,3
+
+        -----
+        var names = ['HTML', 'CSS', 'JavaScript'];
+        var nameLengths = names.map(function(name,idx,arr) {
+        return name.length;
+        });
+        // получили массив с длинами
+        alert( nameLengths ); // 4,3,10
+
+        ----
+        var arr = [1, -1, 2, -2, 3];
+        function isPositive(number) {
+        return number > 0;
+        }
+        alert( arr.every(isPositive) ); // false, не все положительные
+        alert( arr.some(isPositive) ); // true, есть хоть одно положительное
+
+        ----
+        reduce/reduceRight
+        reduce/reduceRight
+        Метод «arr.reduce(callback[, initialValue])» используется для последовательной обработки каждого элемента массива с сохранением промежуточного результата.
+
+
+        Он применяет функцию callback по очереди к каждому элементу массива слева направо, сохраняя при этом промежуточный результат.
+
+        Аргументы функции callback(previousValue, currentItem, index, arr):
+
+        previousValue – последний результат вызова функции, он же «промежуточный результат».
+        currentItem – текущий элемент массива, элементы перебираются по очереди слева-направо.
+        index – номер текущего элемента.
+        arr – обрабатываемый массив.
+        Кроме callback, методу можно передать «начальное значение» – аргумент initialValue. Если он есть, то на первом вызове значение previousValue будет равно initialValue, а если у reduce нет второго аргумента, то оно равно первому элементу массива, а перебор начинается со второго.
+
+        Проще всего понять работу метода reduce на примере.
+        Например, в качестве «свёртки» мы хотим получить сумму всех элементов массива.
+        Вот решение в одну строку:
+        var arr = [1, 2, 3, 4, 5]
+        // для каждого элемента массива запустить функцию,
+        // промежуточный результат передавать первым аргументом далее
+        var result = arr.reduce(function(sum, current) {
+        return sum + current;
+        }, 0);
+        alert( result ); // 15
+
 
     </body>
     <script>
@@ -32,7 +82,7 @@
             {color: 'green', id: 4},
             {color: 'green', id: 5}
         ];
-        function ioFunc(inputArr) {
+        function ioFunc1(inputArr) {
             let res = {};
             for (const el of inputArr) {
                 if (!res.hasOwnProperty(el.color)) {
@@ -40,6 +90,20 @@
                 }
                 res[el.color][el.id] = {[el.id]: el};
             }
+            return res;
+        }
+
+        function ioFunc(inputArr) {
+            let res = {};
+
+            res = inputArr.reduce(function (memo, el) {
+                if (!memo.hasOwnProperty(el.color)) {
+                    memo[el.color] = {};
+                }
+                memo[el.color][el.id] = {[el.id]: el};
+                return memo;
+            }, {});
+
             return res;
         }
 
