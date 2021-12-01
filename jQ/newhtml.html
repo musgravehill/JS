@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div>TODO write content</div>
+    </body>
+</html>
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Здесь ваш код по готовности DOM
+    });
+    window.addEventListener('load', function () {
+        // Здесь ваш код после полной загрузки всей страницы
+    });
+
+
+    document.querySelector(".myclass");
+    document.querySelectorAll(".myclass");
+    .forEach(box => {
+        box.style.display = "none"
+    });
+
+
+    const container = document.querySelector(".container");
+    container.querySelector(".box");
+    
+    .addEventListener("click", (e) => { /* ... */ });
+ .addEventListener("mouseenter", (e) => { /* ... */ });
+ .addEventListener("keyup", (e) => { /* ... */ }); 
+ 
+ document.dispatchEvent(new Event("myEvent"));
+document.querySelector(".box").dispatchEvent(new Event("myEvent"));
+
+document.querySelector(".box").style.color = "#000";
+document.querySelector(".box").style.display = "none";
+document.querySelector(".box").style.display = "block";
+
+const box = document.querySelector(".box");
+box.classList.add("focus");
+box.classList.remove("focus");
+box.classList.toggle("focus");
+
+box.classList.add("focus", "highlighted");
+box.classList.remove("focus", "highlighted");
+document.querySelector(".box").classList.replace("focus", "blurred");
+
+if (document.querySelector(".box").classList.contains("focus")) {
+  // Do something...
+}
+
+fetch("data.json")
+  .then(data => {
+    // Handle data
+  }).catch(error => {
+    // Handle error
+  });
+  
+  document.createElement("div");
+document.createElement("span");
+
+var element = document.createElement("div");
+element.textContent = "Text"
+// or create a textNode and append it
+var text = document.createTextNode("Text");
+element.appendChild(text);
+
+document.querySelector(".button").textContent = "New text";
+// Read the text of a .button
+document.querySelector(".button").textContent; // Returns "New text"
+
+var element = document.createElement("div");
+document.querySelector(".container").appendChild(element);
+
+</script>
