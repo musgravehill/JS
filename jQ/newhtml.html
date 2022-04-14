@@ -18,68 +18,105 @@ and open the template in the editor.
 <script>
 
     document.addEventListener("DOMContentLoaded", function () {
-        // Здесь ваш код по готовности DOM
+    // Здесь ваш код по готовности DOM
     });
     window.addEventListener('load', function () {
-        // Здесь ваш код после полной загрузки всей страницы
+    // Здесь ваш код после полной загрузки всей страницы
     });
+    document.querySelectorAll(".div a") //  все ссылки в блоке с классом div
+            document.getElementsByClassName(".div a") // не найдет ничего
+
+
+            element.style.visibility = 'hidden'; // Hide
+    element.style.visibility = 'visible'; // Show
+
+
+    document.querySelectorAll("ul li:first")
+            document.querySelectorAll("#id")
+            document.querySelectorAll("input[name=login]")
+
+
+            document.querySelectorAll() // NodeList
+            document.getElementsByClass() // HTMLCollection  live react
+
+            //ES6 available?
+            //The spread operator [...NodeList] or Array.map()
+            //Array.from(NodeList).forEach()
+
+            const btns = Array.from(document.querySelectorAll('span.product-search-sort-wrapper'));
+    for (btn of btns) {
+    btn.addEventListener('click', (e) => {
+    const sortId = parseInt(e.currentTarget.dataset.sort) || 0;
+    });
+    }
 
 
     document.querySelector(".myclass");
     document.querySelectorAll(".myclass");
     .forEach(box => {
-        box.style.display = "none"
+    box.style.display = "none"
     });
-
-
-    const container = document.querySelector(".container");
-    container.querySelector(".box");
+    document.getElementById("content").innerHTML = 
+            .textContent
+     container.insertAdjacentHTML('beforeend',data);  
+     
     
+            const container = document.querySelector(".container");
+    container.querySelector(".box");
+    ul.addEventListener('click', (e) => {   e.target => '<li>'  e.currentTarget => '<UL>'  });
     .addEventListener("click", (e) => { /* ... */ });
- .addEventListener("mouseenter", (e) => { /* ... */ });
- .addEventListener("keyup", (e) => { /* ... */ }); 
- 
- document.dispatchEvent(new Event("myEvent"));
-document.querySelector(".box").dispatchEvent(new Event("myEvent"));
+    .addEventListener("mouseenter", (e) => { /* ... */ });
+    .addEventListener("keyup", (e) => { /* ... */ });
+    document.dispatchEvent(new Event("myEvent"));
+    document.querySelector(".box").dispatchEvent(new Event("myEvent"));
+    document.querySelector(".box").style.color = "#000";
+    document.querySelector(".box").style.display = "none";
+    document.querySelector(".box").style.display = "block";
+    const box = document.querySelector(".box");
+    box.classList.add("focus");
+    box.classList.remove("focus");
+    box.classList.toggle("focus");
+    box.classList.add("focus", "highlighted");
+    box.classList.remove("focus", "highlighted");
+    document.querySelector(".box").classList.replace("focus", "blurred");
+    if (document.querySelector(".box").classList.contains("focus")) {
+    // Do something...
+    }
 
-document.querySelector(".box").style.color = "#000";
-document.querySelector(".box").style.display = "none";
-document.querySelector(".box").style.display = "block";
-
-const box = document.querySelector(".box");
-box.classList.add("focus");
-box.classList.remove("focus");
-box.classList.toggle("focus");
-
-box.classList.add("focus", "highlighted");
-box.classList.remove("focus", "highlighted");
-document.querySelector(".box").classList.replace("focus", "blurred");
-
-if (document.querySelector(".box").classList.contains("focus")) {
-  // Do something...
-}
-
-fetch("data.json")
-  .then(data => {
-    // Handle data
-  }).catch(error => {
+    fetch("data.json")
+            .then(data => {
+            // Handle data
+            }).catch(error => {
     // Handle error
-  });
-  
-  document.createElement("div");
-document.createElement("span");
-
-var element = document.createElement("div");
-element.textContent = "Text"
+    });
+    document.createElement("div");
+    document.createElement("span");
+    var element = document.createElement("div");
+    element.textContent = "Text"
 // or create a textNode and append it
-var text = document.createTextNode("Text");
-element.appendChild(text);
-
-document.querySelector(".button").textContent = "New text";
+            var text = document.createTextNode("Text");
+    element.appendChild(text);
+    document.querySelector(".button").textContent = "New text";
 // Read the text of a .button
-document.querySelector(".button").textContent; // Returns "New text"
+    document.querySelector(".button").textContent; // Returns "New text"
 
-var element = document.createElement("div");
-document.querySelector(".container").appendChild(element);
+    var element = document.createElement("div");
+    document.querySelector(".container").appendChild(element);
+    
+    
+    function filter() {
+        document.getElementById("brand_list__filter_input").addEventListener('keyup', (e) => {
+            const q = e.currentTarget.value.toLowerCase();
+            const bs = Array.from(document.querySelectorAll('div.brand_list__item_container'));
+            for (b of bs) {
+                const name = b.dataset.name.toLowerCase();
+                if (name.indexOf(q) !== -1) {
+                    b.style.display = "block";
+                } else {
+                    b.style.display = "none";
+                }
+            }
+        });
+    }
 
 </script>

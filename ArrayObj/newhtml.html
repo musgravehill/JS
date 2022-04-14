@@ -8,21 +8,35 @@
     <body>
         const arr = ['a', 'b', 'c', , , ];
         arr.test = 'bad'; //нечисловые ключи или унаследованные ключи
-        
-        
-         //Не пропускает пустой элемент. 
-         //сохраняют значение this из внешней области
+
+        for (let key in yourobject) {
+        console.log(key);
+        }
+        for (let [key, value] of Object.entries(yourobject)) {
+        console.log(key, value);
+        }
+        for (const index of [1, 2, 3, 4, 5].keys()) {
+        console.log(index);
+        }
+
+        for (const [index, value] of [1, 2, 3, 4, 5].entries()) {
+        console.log(index, value);
+        }
+
+
+        //Не пропускает пустой элемент. 
+        //сохраняют значение this из внешней области
         for(let idx=0; idx< arr.length; idx++) 
-        
-        
+
+
         //пропускают пустой элемент
         // НЕ сохраняют значение this из внешней области видимости. Чтобы сохранить, пиши ()=>{}
         //async/await проблема
         //генератор  yield проблема
         arr.forEach((val,idx)=>{}) 
 
-        
-        
+
+
         //Выводит нечисловые ключи или унаследованные ключи
         //пропускают пустой элемент
         //сохраняют значение this из внешней области видимости
